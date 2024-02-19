@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 @Injectable({
@@ -8,18 +9,23 @@ export class CheckerService {
 
   private _age:number=0;
 
-  constructor() { }
-
+  constructor(private http: HttpClient) {
+  }
 
   isValidNumber(a: any):boolean{
     return !!a && typeof a ==='number' && !isNaN(a)
   }
 
-  public get age(){
+  get age(){
     return this._age;
   }
 
-  public set age(value:number){
+  set age(value:number){
     this._age = value;
   }
+
+  getCheckerData(){
+    return this.http.get<any[]>('assets/checkerData.json');
+  }
+
 }

@@ -1,7 +1,6 @@
 import { AccountingService } from './shared/services/accounting/accounting.service';
 import { CheckerService } from './shared/services/checker/checker.service';
 import { Component } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -14,39 +13,48 @@ export class AppComponent {
   currentAmount:number = 0;
 
   constructor(
-    private fb:FormBuilder,
-    private cs: CheckerService,
-    private as: AccountingService
+    private checkerService: CheckerService,
+    private accountingService: AccountingService
     ){}
 
 
-  getinitialFullAmount():number{
-    return this.as.getFullAmount();
-  }
-
-  
   public get name():string{
     return 'Zoé';
   }
+
 
   public changeAge(){
     this.age = 12;
   }
 
-  public multiplier(a:any, b:any){
-    if(this.cs.isValidNumber(a) && this.cs.isValidNumber(b)){
-      const age = this.cs.age;
-      return this.multiply(a,b);
-   }
-   throw new Error('Sorry it is not a valid number');
+
+    public multiplier(a:any, b:any){
+      if(this.checkerService.isValidNumber(a) && this.checkerService.isValidNumber(b)){
+        return a*b;
+     }
+     throw new Error('Sorry it is not a valid number');
+    }
+
+  getFullAmount():number{
+    return this.accountingService.getFullAmount();
   }
 
-  private multiply(a:number,b:number){
-    return a*b;
-  }
-
-
-  public handleAmountChange(amount:number):void{
+  handleAmountChange(amount:number):void{
     this.currentAmount = amount;
+  }
+
+  ecrisUntruc():void{
+    console.log('hello');
+  }
+
+  returnData(){
+    return this.checkerService.getCheckerData()
+      .subscribe
+    ({
+      next:(data:any[])=> console.log(data),
+      error:(err) => console.log('No, something went wrong',err),
+      complete:()=> console.log('http request completed')
+  })
+
   }
 }

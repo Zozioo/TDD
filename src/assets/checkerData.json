@@ -1,0 +1,22 @@
+[
+{
+  "firstName":"Zoé",
+  "lastName":"Rouquié",
+  "age":21
+},
+{
+  "firstName":"John",
+  "lastName":"Carlsson",
+  "age":24
+},
+{
+  "firstName":"Arthur",
+  "lastName":"Dupont",
+  "age":54
+},
+{
+  "firstName":"Céline",
+  "lastName":"Dupuis",
+  "age":84
+}
+]

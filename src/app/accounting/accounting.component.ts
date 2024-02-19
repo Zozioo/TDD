@@ -12,7 +12,7 @@ export class AccountingComponent {
 
   @Output() amountChange: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor(private accountingS:AccountingService){
+  constructor(){
 
   }
 }
