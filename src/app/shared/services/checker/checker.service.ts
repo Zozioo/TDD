@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, catchError, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -22,6 +23,13 @@ export class CheckerService {
 
   set age(value:number){
     this._age = value;
+  }
+
+
+  apiUrl = 'https://dummyjson.com'
+
+  get<T>():Observable<T>{
+    return this.http.get<T>(`${this.apiUrl}`);
   }
 
   getCheckerData(){

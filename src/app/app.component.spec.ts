@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed} from '@angular/core/testing';
 import { AppComponent } from './app.component';
 import { CheckerService } from './shared/services/checker/checker.service';
-import { AccountingComponent } from './accounting/accounting.component';
 import { AppModule } from './app.module';
 import { findChildComponent } from './shared/helpers/testing-helpers';
 import { AccountingService } from './shared/services/accounting/accounting.service';
@@ -30,7 +29,7 @@ describe('AppComponent', () => {
   beforeEach(()=> {
     TestBed.configureTestingModule({
       declarations: [
-        AccountingComponent
+        AppComponent
       ],
       //mocks
       providers:[
@@ -52,8 +51,8 @@ describe('AppComponent', () => {
             ],
             imports:[AppModule]
             });
-            fixture = TestBed.createComponent(AppComponent)
-            app = fixture.componentInstance;
+      fixture = TestBed.createComponent(AppComponent)
+      app = fixture.componentInstance;
           });
 
   let checkerService: CheckerService;
@@ -145,7 +144,7 @@ describe('AppComponent', () => {
   })
 
 
-//composants enfant
+  //composants enfant
   describe('AccountingComponent', ()=>{
     it('should check if app-accounting is present',()=>{
       let accounting = findChildComponent<AppComponent>(fixture,'app-accounting');
@@ -181,9 +180,9 @@ describe('AppComponent', () => {
   })
 
 
-  xit('should test an HttpRequest',()=>{
-    checkerService.getCheckerData();
-
+  xit('should test an HttpRequest using Get method',()=>{
+    checkerService.get().subscribe();
+    
   })
 });
 

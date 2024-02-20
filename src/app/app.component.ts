@@ -28,12 +28,12 @@ export class AppComponent {
   }
 
 
-    public multiplier(a:any, b:any){
-      if(this.checkerService.isValidNumber(a) && this.checkerService.isValidNumber(b)){
-        return a*b;
-     }
-     throw new Error('Sorry it is not a valid number');
+  public multiplier(a:any, b:any){
+    if(this.checkerService.isValidNumber(a) && this.checkerService.isValidNumber(b)){
+      return a*b;
     }
+    throw new Error('Sorry it is not a valid number');
+  }
 
   getFullAmount():number{
     return this.accountingService.getFullAmount();
