@@ -29,11 +29,17 @@ export class CheckerService {
   apiUrl = 'https://dummyjson.com'
 
   get<T>():Observable<T>{
-    return this.http.get<T>(`${this.apiUrl}`);
+    return this.http.get<T>(`${this.apiUrl}`).pipe(
+      catchError(err =>{
+        console.log(err);
+        return throwError(()=>err);
+
+      })
+    );
   }
 
   getCheckerData(){
-    return this.http.get<any[]>('assets/checkerData.json');
+    return this.http.get<any[]>('assets/checkerData.json')
   }
 
 }

@@ -4,6 +4,7 @@ import { CheckerService } from './shared/services/checker/checker.service';
 import { AppModule } from './app.module';
 import { findChildComponent } from './shared/helpers/testing-helpers';
 import { AccountingService } from './shared/services/accounting/accounting.service';
+import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
 
 declare global{
   namespace jasmine {
@@ -49,7 +50,7 @@ describe('AppComponent', () => {
                 // }
               },
             ],
-            imports:[AppModule]
+            imports:[AppModule, HttpClientTestingModule]
             });
       fixture = TestBed.createComponent(AppComponent)
       app = fixture.componentInstance;
@@ -57,10 +58,14 @@ describe('AppComponent', () => {
 
   let checkerService: CheckerService;
   let accountingService: AccountingService;
+  let http: HttpTestingController;
+
   //pour les services
   beforeEach(()=>{
     checkerService = TestBed.inject(CheckerService);
     accountingService = TestBed.inject(AccountingService);
+    http = TestBed.inject(HttpTestingController);
+
   })
 
   //pour créer son propre matcher
@@ -172,17 +177,41 @@ describe('AppComponent', () => {
 
   })
 
-//SyOn console log
+//SpyOn console log
   it('should check console.log has been called',()=>{
     let spyLog = spyOn(window.console,'log');
     app.ecrisUntruc();
     expect(spyLog).toHaveBeenCalled();
-  })
+  });
 
 
-  xit('should test an HttpRequest using Get method',()=>{
+  afterAll(()=>{
+    http.verify();
+  });
+
+
+  describe('HttpRequest GET', ()=>{
+
+    it('should test an HttpRequest using Get method',()=>{
     checkerService.get().subscribe();
-    
-  })
+    let req = http.expectOne('https://dummyjson.com');
+      expect(req.request.method).toBe('GET');
+
+      req.flush({},{status:200, statusText:'OK'})
+    });
+
+    it('should test the catch error', ()=>{
+      checkerService.get().subscribe({
+        next: () => fail('should have failed with 400 error'),
+        error(error) {
+          expect(error.status).toEqual(400);
+        }
+    });
+      const req = http.expectOne('https://dummyjson.com');
+      req.flush(null, { status: 400, statusText: 'Bad Request' });
+    })
+  });
+
+
 });
 
