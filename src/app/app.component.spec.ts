@@ -50,7 +50,7 @@ describe('AppComponent', () => {
                 // }
               },
             ],
-            imports:[AppModule, HttpClientTestingModule]
+          imports:[AppModule, HttpClientTestingModule]
             });
       fixture = TestBed.createComponent(AppComponent)
       app = fixture.componentInstance;
@@ -63,6 +63,8 @@ describe('AppComponent', () => {
   //pour les services
   beforeEach(()=>{
     checkerService = TestBed.inject(CheckerService);
+
+
     accountingService = TestBed.inject(AccountingService);
     http = TestBed.inject(HttpTestingController);
 
@@ -98,7 +100,7 @@ describe('AppComponent', () => {
   })
 
 
-//matchers de Jasmine
+//création de matchers avec Jasmine
   it("va vérifier si mon matcher marche", ()=>{
     expect(3).toBeCorrect();
   });
@@ -116,7 +118,6 @@ describe('AppComponent', () => {
   });
 
  //les services:
-
  describe('multiplier',()=>{
    it('should multiply two numbers correctly', ()=>{
      let result = app.multiplier(2,4);
@@ -129,9 +130,9 @@ describe('AppComponent', () => {
       spyIsValidNumber = spyOn(checkerService, 'isValidNumber').and.returnValue(true);
       //pour surveiller le comportement de la fonction isValidNumber et simuler son retour à true
 
-      app.multiplier(2,4);
+      app.multiplier(5,4);
       expect(spyIsValidNumber).toHaveBeenCalledTimes(2);
-      expect(spyIsValidNumber).toHaveBeenCalledWith(jasmine.any(Number));
+      expect(spyIsValidNumber).toHaveBeenCalledWith(jasmine.any(Number)); // en argument
 
     });
   });
@@ -149,7 +150,7 @@ describe('AppComponent', () => {
   })
 
 
-  //composants enfant
+  //composant enfant
   describe('AccountingComponent', ()=>{
     it('should check if app-accounting is present',()=>{
       let accounting = findChildComponent<AppComponent>(fixture,'app-accounting');

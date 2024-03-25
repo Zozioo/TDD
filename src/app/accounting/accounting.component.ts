@@ -1,5 +1,4 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { AccountingService } from '../shared/services/accounting/accounting.service';
 
 @Component({
   selector: 'app-accounting',
@@ -13,6 +12,6 @@ export class AccountingComponent {
   @Output() amountChange: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(){
-
+this.amountChange.emit(10)
   }
 }
